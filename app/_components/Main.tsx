@@ -10,7 +10,7 @@ export default function Main({ filter }: Filter) {
       <HeroSection />
       <div className="flex flex-col gap-3">
         <h3 className="font-bold text-4xl" id="discover">
-          Car Catalouge
+          Car Catalogue
         </h3>
         <p className="font-light">Explore our cars you might like</p>
       </div>

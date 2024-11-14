@@ -45,7 +45,7 @@ export default function SearchBar() {
               setCar(e.target.value)
             }
             placeholder="Search Car (Toyota)"
-            className="p-2 pl-[26px] w-full sm:w-auto sm:pl-8 text-sm sm:text-base text-gray-700 bg-gray-100 outline-none relative rounded-sm"
+            className="p-2 pl-[26px] w-full sm:w-auto sm:pl-8 text-xs sm:text-base text-gray-700 bg-gray-100 outline-none relative rounded-sm"
           />
           <span className=" p-2 flex mt-[2px] md:mt-1 absolute text-gray-500">
             <FaCar />
@@ -59,7 +59,7 @@ export default function SearchBar() {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setModel(e.target.value)
             }
-            className="p-2 pl-[26px] w-full sm:w-auto sm:pl-8 text-sm sm:text-base text-gray-700 bg-gray-100 outline-none relative rounded-sm"
+            className="p-2 pl-[26px] w-full sm:w-auto sm:pl-8 text-xs sm:text-base text-gray-700 bg-gray-100 outline-none relative rounded-sm"
           />
           <span className=" p-2 flex mt-[2px] md:mt-1 absolute text-gray-500">
             <GiCarWheel />

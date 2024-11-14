@@ -19,7 +19,7 @@ export default function Footer() {
           <Image src={logo} alt="Logo" height="64" width="120" quality={80} />
         </div>
         <div>
-          <p className="font-thin">CarHup {year} All Rights Reserved &#xA9;</p>
+          <p className="font-thin">CarHub {year} All Rights Reserved &#xA9;</p>
         </div>
         <div>
           <p className="font-thin">
