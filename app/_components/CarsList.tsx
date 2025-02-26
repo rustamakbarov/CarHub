@@ -18,14 +18,24 @@ export default async function CarsList({ filter }: Filter) {
 
   displayedCars = cars;
 
-  years = Array.from(new Set(displayedCars?.map((car) => car.year)));
+  years = Array.from(
+    new Set(
+      (Array.isArray(displayedCars) ? displayedCars : []).map((car) => car.year)
+    )
+  );
 
   if (
     (typeof filter === "object" && filter.model) ||
     (typeof filter === "object" && filter.car)
   ) {
     displayedCars = await getCars(filter.model, filter.car);
-    years = Array.from(new Set(displayedCars.map((car) => car.year)));
+    years = Array.from(
+      new Set(
+        (Array.isArray(displayedCars) ? displayedCars : []).map(
+          (car) => car.year
+        )
+      )
+    );
   }
 
   if (typeof filter === "object" && filter.limit) {
