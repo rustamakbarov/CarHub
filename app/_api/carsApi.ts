@@ -1,46 +1,82 @@
 import { CarCard } from "../_types/types";
 
-// const headers = {
-//   "X-RapidAPI-Key": "KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA",
-//   "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
-// };
-
 // export async function getCars(car?: string, make?: string, limit?: number) {
+//   // try {
+//   //   // Vercel'deki çevresel değişkeni kullanıyoruz
+//   //   const apiKey = process.env.RAPIDAPI_KEY;
+
+//   //   // URL'yi çevresel değişken ile dinamik hale getiriyoruz
+//   //   const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
+//   //     limit ? limit : "7"
+//   //   }`;
+
+//   //   // API isteğini yapıyoruz, headers kısmında çevresel değişkeni gönderiyoruz
+//   //   const response = await fetch(url, {
+//   //     headers: {
+//   //       "X-RapidAPI-Key": apiKey || "", // Eğer apiKey null veya undefined ise, boş string gönderiyoruz
+//   //       "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
+//   //     },
+//   //   }).then((res) => res.json());
+
+//   //   return response;
+//   // } catch (err) {
+//   //   alert(err);
+//   // }
 //   try {
+//     const apiKey = process.env.RAPIDAPI_KEY;
 //     const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
 //       limit ? limit : "7"
 //     }`;
-//     const response = await fetch(url, { headers: headers }).then((res) =>
-//       res.json()
-//     );
 
-//     return response;
+//     const response = await fetch(url, {
+//       headers: {
+//         "X-RapidAPI-Key": apiKey || "",
+//         "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
+//       },
+//     });
+
+//     if (!response.ok) {
+//       throw new Error(`API request failed with status ${response.status}`);
+//     }
+
+//     const data = await response.json();
+//     console.log("API Response:", data); // API yanıtını logla
+//     return data;
 //   } catch (err) {
-//     alert(err);
+//     console.error("API Error:", err); // Hata detaylarını logla
+//     throw err;
 //   }
 // }
 
 export async function getCars(car?: string, make?: string, limit?: number) {
   try {
-    // Vercel'deki çevresel değişkeni kullanıyoruz
     const apiKey = process.env.RAPIDAPI_KEY;
-
-    // URL'yi çevresel değişken ile dinamik hale getiriyoruz
     const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
       limit ? limit : "7"
     }`;
 
-    // API isteğini yapıyoruz, headers kısmında çevresel değişkeni gönderiyoruz
     const response = await fetch(url, {
       headers: {
-        "X-RapidAPI-Key": apiKey || "", // Eğer apiKey null veya undefined ise, boş string gönderiyoruz
+        "X-RapidAPI-Key": apiKey || "",
         "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
       },
-    }).then((res) => res.json());
+    });
 
-    return response;
+    if (!response.ok) {
+      console.error("API Error:", response.status, response.statusText);
+      return [];
+    }
+
+    const data = await response.json();
+
+    if (!data || data.length === 0) {
+      return [];
+    }
+
+    return data;
   } catch (err) {
-    alert(err);
+    console.error("API Error:", err);
+    return [];
   }
 }
 

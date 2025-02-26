@@ -8,7 +8,7 @@ import ErrorComponent from "./ErrorComponent";
 import ShowMoreButton from "./ShowMoreButton";
 
 export default async function CarsList({ filter }: Filter) {
-  const cars = await getCars("q5", "audi");
+  const cars = (await getCars("q5", "audi")) || [];
 
   let displayedCars: CarCard[] = [];
   let isEmpty = false;
