@@ -1,18 +1,42 @@
 import { CarCard } from "../_types/types";
 
-const headers = {
-  "X-RapidAPI-Key": "KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA",
-  "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
-};
+// const headers = {
+//   "X-RapidAPI-Key": "KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA",
+//   "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
+// };
+
+// export async function getCars(car?: string, make?: string, limit?: number) {
+//   try {
+//     const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
+//       limit ? limit : "7"
+//     }`;
+//     const response = await fetch(url, { headers: headers }).then((res) =>
+//       res.json()
+//     );
+
+//     return response;
+//   } catch (err) {
+//     alert(err);
+//   }
+// }
 
 export async function getCars(car?: string, make?: string, limit?: number) {
   try {
+    // Vercel'deki çevresel değişkeni kullanıyoruz
+    const apiKey = process.env.RAPIDAPI_KEY;
+
+    // URL'yi çevresel değişken ile dinamik hale getiriyoruz
     const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
       limit ? limit : "7"
     }`;
-    const response = await fetch(url, { headers: headers }).then((res) =>
-      res.json()
-    );
+
+    // API isteğini yapıyoruz, headers kısmında çevresel değişkeni gönderiyoruz
+    const response = await fetch(url, {
+      headers: {
+        "X-RapidAPI-Key": apiKey || "", // Eğer apiKey null veya undefined ise, boş string gönderiyoruz
+        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
+      },
+    }).then((res) => res.json());
 
     return response;
   } catch (err) {
