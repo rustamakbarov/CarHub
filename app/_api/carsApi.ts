@@ -50,7 +50,7 @@ import { CarCard } from "../_types/types";
 
 export async function getCars(car?: string, make?: string, limit?: number) {
   try {
-    const apiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
+    const apiKey = "KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA";
     const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
       limit ? limit : "7"
     }`;
