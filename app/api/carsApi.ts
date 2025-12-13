@@ -1,61 +1,64 @@
 import { CarCard } from "../_types/types";
 
-// export async function getCars(car?: string, make?: string, limit?: number) {
-//   try {
-//     const apiKey = "KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA";
-
-//     const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
-//       limit ? limit : "7"
-//     }`;
-
-//     const response = await fetch(url, {
-//       headers: {
-//         "X-RapidAPI-Key": apiKey || "",
-//         "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
-//       },
-//     });
-
-//     if (!response.ok) {
-//       console.log("API Error:", response.status, response.statusText);
-//       return [];
-//     }
-
-//     const data = await response.json();
-
-//     if (!data || data.length === 0) {
-//       return [];
-//     }
-
-//     return data;
-//   } catch (err) {
-//     console.error("API Error:", err);
-//     return [];
-//   }
-// }
-
 export async function getCars(car?: string, make?: string, limit?: number) {
-  const isProduction = process.env.NODE_ENV === "production";
-  const baseUrl = isProduction
-    ? "https://car-hub-by-rm.vercel.app"
-    : "http:127.0.0.1:3000";
-
   try {
-    const cars = await fetch(
-      `${baseUrl}/api/cars?make=${make}&model=${car}&limit=${
-        limit ? limit : "7"
-      }`
-    ).then((r) => r.json());
+    const apiKey = "KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA";
 
-    if (!cars || cars.length === 0) {
+    const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
+      limit ? limit : "7"
+    }`;
+
+    console.log("🌐 RAPIDAPI'ye İstek Atılıyor:", url);
+
+    const response = await fetch(url, {
+      headers: {
+        "X-RapidAPI-Key": apiKey || "",
+        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
+      },
+    });
+
+    if (!response.ok) {
+      console.log("API Error:", response.status, response.statusText);
       return [];
     }
 
-    return cars;
+    const data = await response.json();
+    console.log("✅ BAŞARILI! Alınan Araba Sayısı:", data.length);
+
+    if (!data || data.length === 0) {
+      return [];
+    }
+
+    return data;
   } catch (err) {
     console.error("API Error:", err);
     return [];
   }
 }
+
+// export async function getCars(car?: string, make?: string, limit?: number) {
+//   const isProduction = process.env.NODE_ENV === "production";
+//   const baseUrl = isProduction
+//     ? "https://car-hub-by-rm.vercel.app"
+//     : "http:127.0.0.1:3000";
+
+//   try {
+//     const cars = await fetch(
+//       `${baseUrl}/api/cars?make=${make}&model=${car}&limit=${
+//         limit ? limit : "7"
+//       }`
+//     ).then((r) => r.json());
+
+//     if (!cars || cars.length === 0) {
+//       return [];
+//     }
+
+//     return cars;
+//   } catch (err) {
+//     console.error("API Error:", err);
+//     return [];
+//   }
+// }
 
 export const calculateCarRent = (city_mpg: number, year: number) => {
   const basePricePerDay = 50; // Base rental price per day in dollars
@@ -84,11 +87,4 @@ export function generateCarPhotos(car: CarCard, angle?: string) {
   url.searchParams.append("angle", `${angle}`);
 
   return `${url}`;
-}
-
-export async function getCarsFromOurAPİ() {
-  // Server Component'te
-  const cars = await fetch(
-    `http://127.0.0.1:3000/api/cars?make=audi&model=q5`
-  ).then((r) => r.json());
 }
