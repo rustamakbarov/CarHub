@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { CarCard } from "../_types/types";
-import { calculateCarRent, generateCarPhotos } from "../_api/carsApi";
+import { calculateCarRent, generateCarPhotos } from "../api/carsApi";
 import Image from "next/image";
 import { RiGasStationFill } from "react-icons/ri";
 import { GiCartwheel } from "react-icons/gi";

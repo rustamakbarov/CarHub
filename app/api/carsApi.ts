@@ -1,29 +1,9 @@
 import { CarCard } from "../_types/types";
 
 // export async function getCars(car?: string, make?: string, limit?: number) {
-//   // try {
-//   //   // Vercel'deki çevresel değişkeni kullanıyoruz
-//   //   const apiKey = process.env.RAPIDAPI_KEY;
-
-//   //   // URL'yi çevresel değişken ile dinamik hale getiriyoruz
-//   //   const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
-//   //     limit ? limit : "7"
-//   //   }`;
-
-//   //   // API isteğini yapıyoruz, headers kısmında çevresel değişkeni gönderiyoruz
-//   //   const response = await fetch(url, {
-//   //     headers: {
-//   //       "X-RapidAPI-Key": apiKey || "", // Eğer apiKey null veya undefined ise, boş string gönderiyoruz
-//   //       "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
-//   //     },
-//   //   }).then((res) => res.json());
-
-//   //   return response;
-//   // } catch (err) {
-//   //   alert(err);
-//   // }
 //   try {
-//     const apiKey = process.env.RAPIDAPI_KEY;
+//     const apiKey = "KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA";
+
 //     const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
 //       limit ? limit : "7"
 //     }`;
@@ -36,44 +16,41 @@ import { CarCard } from "../_types/types";
 //     });
 
 //     if (!response.ok) {
-//       throw new Error(`API request failed with status ${response.status}`);
+//       console.log("API Error:", response.status, response.statusText);
+//       return [];
 //     }
 
 //     const data = await response.json();
-//     console.log("API Response:", data); // API yanıtını logla
+
+//     if (!data || data.length === 0) {
+//       return [];
+//     }
+
 //     return data;
 //   } catch (err) {
-//     console.error("API Error:", err); // Hata detaylarını logla
-//     throw err;
+//     console.error("API Error:", err);
+//     return [];
 //   }
 // }
 
 export async function getCars(car?: string, make?: string, limit?: number) {
+  const isProduction = process.env.NODE_ENV === "production";
+  const baseUrl = isProduction
+    ? "https://car-hub-by-rm.vercel.app"
+    : "http:127.0.0.1:3000";
+
   try {
-    const apiKey = "KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA";
-    const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${make}&model=${car}&limit=${
-      limit ? limit : "7"
-    }`;
+    const cars = await fetch(
+      `${baseUrl}/api/cars?make=${make}&model=${car}&limit=${
+        limit ? limit : "7"
+      }`
+    ).then((r) => r.json());
 
-    const response = await fetch(url, {
-      headers: {
-        "X-RapidAPI-Key": apiKey || "",
-        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
-      },
-    });
-
-    if (!response.ok) {
-      console.error("API Error:", response.status, response.statusText);
+    if (!cars || cars.length === 0) {
       return [];
     }
 
-    const data = await response.json();
-
-    if (!data || data.length === 0) {
-      return [];
-    }
-
-    return data;
+    return cars;
   } catch (err) {
     console.error("API Error:", err);
     return [];
@@ -107,4 +84,11 @@ export function generateCarPhotos(car: CarCard, angle?: string) {
   url.searchParams.append("angle", `${angle}`);
 
   return `${url}`;
+}
+
+export async function getCarsFromOurAPİ() {
+  // Server Component'te
+  const cars = await fetch(
+    `http://127.0.0.1:3000/api/cars?make=audi&model=q5`
+  ).then((r) => r.json());
 }

@@ -5,7 +5,7 @@ import { CarCard } from "../_types/types";
 import Image from "next/image";
 import hero_car from "../_imgs/hero_car.png";
 import { MdOutlineClose } from "react-icons/md";
-import { generateCarPhotos } from "../_api/carsApi";
+import { generateCarPhotos } from "../api/carsApi";
 import SpinnerMini from "./SpinnerMini";
 
 interface CarProps {

@@ -1,5 +1,5 @@
 import React from "react";
-import { getCars } from "../_api/carsApi";
+import { getCars } from "../api/carsApi";
 import CustomFilter from "./CustomFilter";
 import SearchBar from "./SearchBar";
 import { CarCard, Filter } from "../_types/types";
